@@ -244,7 +244,7 @@ private object KuduConnection {
   def getSyncClient(kuduMaster: String): KuduClient = {
     syncCache.synchronized {
       if (!syncCache.contains(kuduMaster)) {
-        val syncClient = new KuduClient.KuduClientBuilder(kuduMaster).build()
+        val syncClient = new KuduClient.KuduClientBuilder(kuduMaster).defaultAdminOperationTimeoutMs(120000L).defaultOperationTimeoutMs(120000L).defaultSocketReadTimeoutMs(120000L).build()
         ShutdownHookManager.get().addShutdownHook(new Runnable {
           override def run() = syncClient.close()
         }, ShutdownHookPriority)
@@ -257,7 +257,7 @@ private object KuduConnection {
   def getAsyncClient(kuduMaster: String): AsyncKuduClient = {
     asyncCache.synchronized {
       if (!asyncCache.contains(kuduMaster)) {
-        val asyncClient = new AsyncKuduClient.AsyncKuduClientBuilder(kuduMaster).build()
+        val asyncClient = new AsyncKuduClient.AsyncKuduClientBuilder(kuduMaster).defaultAdminOperationTimeoutMs(120000L).defaultOperationTimeoutMs(120000L).defaultSocketReadTimeoutMs(120000L).build()
         ShutdownHookManager.get().addShutdownHook(
           new Runnable {
             override def run() = asyncClient.close()

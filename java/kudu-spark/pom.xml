@@ -20,8 +20,17 @@
         <version>1.2.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>kudu-${spark.version.label}_${scala.binary.version}</artifactId>
+    <artifactId>kudu-spark_2.11-rms-timeout120v2</artifactId>
     <name>Kudu Spark Bindings</name>
+
+    <properties>
+        <spark.version>1.6.1</spark.version>
+        <spark.version.label>spark</spark.version.label>
+        <scala.version>2.11.6</scala.version>
+        <scala.binary.version>2.11</scala.binary.version>
+        <top.dir>${project.basedir}/..</top.dir>
+        <compat.src>src/main/spark1</compat.src>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -176,26 +185,23 @@
 
     <profiles>
         <profile>
-            <id>spark_2.10</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <spark.version>1.6.1</spark.version>
-                <spark.version.label>spark</spark.version.label>
-                <scala.version>2.10.4</scala.version>
-                <scala.binary.version>2.10</scala.binary.version>
-                <compat.src>src/main/spark1</compat.src>
-            </properties>
-        </profile>
-        <profile>
             <id>spark2_2.11</id>
             <properties>
                 <spark.version>2.0.1</spark.version>
+                <compat.src>src/main/spark2</compat.src>
                 <spark.version.label>spark2</spark.version.label>
                 <scala.version>2.11.6</scala.version>
                 <scala.binary.version>2.11</scala.binary.version>
-                <compat.src>src/main/spark2</compat.src>
+            </properties>
+        </profile>
+        <profile>
+            <id>spark1_2.11-rmsPatch</id>
+            <properties>
+                <spark.version>1.6.1</spark.version>
+                <compat.src>src/main/spark1</compat.src>
+                <spark.version.label>spark1</spark.version.label>
+                <scala.version>2.11.6</scala.version>
+                <scala.binary.version>2.11</scala.binary.version>
             </properties>
         </profile>
     </profiles>
